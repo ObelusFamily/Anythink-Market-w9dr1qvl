@@ -25,9 +25,9 @@ const EditProfileSettings = (props) => {
 };
 
 const FollowUserButton = (props) => {
-  if (props.isUser) {
-    return null;
-  }
+  // if (props.isUser) {
+  //   return null;
+  // }
 
   let classes = "btn btn-sm action-btn";
   if (props.user.following) {
@@ -120,8 +120,9 @@ class Profile extends React.Component {
     }
 
     const isUser =
-      this.props.currentUser &&
-      this.props.profile.username === this.props.currentUser.username;
+      this.props.currentUser;
+      
+      const isNotCurrentUser = this.props.profile.username !== this.props.currentUser.username;
 
     return (
       <div className="profile-page">
@@ -136,13 +137,13 @@ class Profile extends React.Component {
               <h4 className="py-2">{profile.username}</h4>
               <p>{profile.bio}</p>
 
-              <EditProfileSettings isUser={isUser} />
-              <FollowUserButton
+              {!isNotCurrentUser && <EditProfileSettings isUser={isUser} />}
+              {isNotCurrentUser && <FollowUserButton
                 isUser={isUser}
                 user={profile}
                 follow={this.props.onFollow}
                 unfollow={this.props.onUnfollow}
-              />
+              />}
             </div>
           </div>
         </div>
